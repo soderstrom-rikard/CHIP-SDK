@@ -1,4 +1,6 @@
 #!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+COMMON_SCRIPT=./$DIR/setup_common.sh
 
 echo -e "\n Setting up environment in Ubuntu 14.04"
 sudo apt-get -y update
@@ -38,19 +40,5 @@ SUBSYSTEM=="usb", ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="1010", GROUP="plug
 ' | sudo tee /etc/udev/rules.d/99-allwinner.rules
 sudo udevadm control --reload-rules
 
-echo -e "\n Installing sunxi-tools"
-git clone http://github.com/linux-sunxi/sunxi-tools
-pushd sunxi-tools
-make
-if [[ -L /usr/local/bin/fel ]]; then
-	sudo rm /usr/local/bin/fel
-fi
-sudo ln -s $PWD/fel /usr/local/bin/fel
-popd
-
-echo -e "\n Installing CHIP-tools"
-git clone http://github.com/NextThingCo/CHIP-tools
-
-echo -e "\n Installing CHIP-buildroot"
-git clone http://github.com/NextThingCo/CHIP-buildroot
-
+${COMMON_SCRIPT} $@
+exit $?
