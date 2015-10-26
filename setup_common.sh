@@ -7,7 +7,7 @@ CHIP_BUILDROOT=${3:-chip-buildroot}
 if [ ! -d $SUNXI_TOOLS ];
 then
   echo -e "\n Installing sunxi-tools"
-  git clone http://github.com/linux-sunxi/sunxi-tools $SUNXI_TOOLS
+  git clone http://github.com/NextThingCo/sunxi-tools $SUNXI_TOOLS
   pushd $SUNXI_TOOLS
   make
   if [[ -L /usr/local/bin/fel ]]; then
